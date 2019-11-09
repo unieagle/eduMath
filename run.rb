@@ -11,13 +11,16 @@ def show_question(question)
   end
   correct = eval(question) == ans.to_f
   puts symbol(correct)
+  unless correct
+    puts "正确答案是: #{question} = #{eval(question)}"
+  end
   puts ''
   correct
 end
 
 def get_questions
   lower = 1
-  upper = 9
+  upper = 5
   questions = []
   (lower..upper).each do |a|
     (a..upper).each do |b|
