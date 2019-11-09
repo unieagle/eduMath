@@ -1,7 +1,9 @@
-### Run:
+# Run:
 
 ```
 ruby run.rb
 ```
 
-### Example:
+# Example:
+
+![Example](https://github.com/unieagle/eduMath/blob/master/example.png)
