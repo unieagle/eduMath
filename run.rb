@@ -20,7 +20,7 @@ end
 
 def get_questions
   lower = 1
-  upper = 5
+  upper = 3
   questions = []
   (lower..upper).each do |a|
     (a..upper).each do |b|
