@@ -18,13 +18,29 @@ def show_question(question)
   correct
 end
 
+Random.new_seed
+
+def format_question(a, b)
+  if Random.rand >= 0.5
+    "#{a} + #{b}"
+  else
+    "#{b} + #{a}"
+  end
+end
+
 def get_questions
   lower = 1
-  upper = 9
+  upper = 8
   questions = []
   (lower..upper).each do |a|
     (a..upper).each do |b|
-      q = "#{a} + #{b}"
+      q = format_question(a, b)
+      questions << q
+    end
+  end
+  (lower..upper).each do |a|
+    ((upper)..upper).each do |b|
+      q = format_question(a, b)
       questions << q
     end
   end
@@ -34,17 +50,17 @@ end
 def run
   questions = get_questions
   questions.shuffle!
-  results = {}
+  results = []
   questions.each do |q|
-    results[q] = show_question(q)
+    results << [q, show_question(q)]
   end
 
-  results.keys.sort.each do |question|
-    puts "#{question} : #{symbol(results[question])}"
+  results.each do |question|
+    puts "#{question.first} : #{symbol(question.last)}"
   end
 
   puts "Total: #{questions.count}"
-  puts "Correct: #{results.values.select{|r| r == true}.count}"
+  puts "Correct: #{results.select{|q| q.last == true}.count}"
 end
 
 run
