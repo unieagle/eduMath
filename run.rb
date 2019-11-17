@@ -30,7 +30,7 @@ end
 
 def get_questions
   lower = 1
-  upper = 8
+  upper = 9
   questions = []
   (lower..upper).each do |a|
     (a..upper).each do |b|
@@ -39,7 +39,7 @@ def get_questions
     end
   end
   (lower..upper).each do |a|
-    ((upper)..upper).each do |b|
+    ((upper-1)..upper).each do |b|
       q = format_question(a, b)
       questions << q
     end
@@ -59,8 +59,20 @@ def run
     puts "#{question.first} : #{symbol(question.last)}"
   end
 
-  puts "Total: #{questions.count}"
-  puts "Correct: #{results.select{|q| q.last == true}.count}"
+  puts "---------------"
+  puts "总题数: #{questions.count}"
+  puts "正确✅: #{results.select{|q| q.last == true}.count}"
+  puts "错误❌: #{results.select{|q| q.last != true}.count}"
+  puts "---------------"
+
+  wrongs = results.select{|q| q.last == false }
+  while wrongs.count > 0
+    puts "复习: #{wrongs.count}"
+    wrongs.each do |question|
+      question[1] = show_question(question.first)
+    end
+    wrongs = wrongs.select{|q| q.last == false }
+  end
 end
 
 run
