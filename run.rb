@@ -38,8 +38,8 @@ def get_questions
       questions << q
     end
   end
-  (lower..upper).each do |a|
-    ((upper-1)..upper).each do |b|
+  ((upper-1)..upper).each do |a|
+    (lower..a).each do |b|
       q = format_question(a, b)
       questions << q
     end
