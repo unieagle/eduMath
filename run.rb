@@ -59,11 +59,13 @@ def run
     puts "#{question.first} : #{symbol(question.last)}"
   end
 
-  puts "\n---------------"
+  puts ""
+  puts "---------------"
   puts "总题数: #{questions.count}"
   puts "正确✅: #{results.select{|q| q.last == true}.count}"
   puts "错误❌: #{results.select{|q| q.last != true}.count}"
-  puts "---------------\n"
+  puts "---------------"
+  puts ""
 
   wrongs = results.select{|q| q.last == false }
   while wrongs.count > 0
