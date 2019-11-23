@@ -72,8 +72,7 @@ def get_sub_questions
 end
 
 def run
-  questions = get_questions.shuffle.first(15)
-            + get_sub_questions.shuffle.first(15)
+  questions = get_questions.shuffle.first(15) + get_sub_questions.shuffle.first(15)
 
   results = []
   questions.each do |q|
