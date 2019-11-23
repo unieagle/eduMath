@@ -20,11 +20,16 @@ end
 
 Random.new_seed
 
-def format_question(a, b)
-  if Random.rand >= 0.5
-    "#{a} + #{b}"
-  else
-    "#{b} + #{a}"
+def format_question(a, b, op = :add)
+  case op
+  when :add
+    if Random.rand >= 0.5
+      "#{a} + #{b}"
+    else
+      "#{b} + #{a}"
+    end
+  when :sub
+    "#{a} - #{b}"
   end
 end
 
@@ -38,9 +43,28 @@ def get_questions
       questions << q
     end
   end
+  # ((upper-1)..upper).each do |a|
+  #   (lower..a).each do |b|
+  #     q = format_question(a, b)
+  #     questions << q
+  #   end
+  # end
+  return questions
+end
+
+def get_sub_questions
+  lower = 1
+  upper = 6
+  questions = []
+  (lower..upper).each do |a|
+    (a..upper).each do |b|
+      q = format_question(b, a, :sub)
+      questions << q
+    end
+  end
   ((upper-1)..upper).each do |a|
     (lower..a).each do |b|
-      q = format_question(a, b)
+      q = format_question(a, b, :sub)
       questions << q
     end
   end
@@ -48,8 +72,9 @@ def get_questions
 end
 
 def run
-  questions = get_questions
-  questions.shuffle!
+  questions = get_questions.shuffle.first(15)
+            + get_sub_questions.shuffle.first(15)
+
   results = []
   questions.each do |q|
     results << [q, show_question(q)]
