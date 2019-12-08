@@ -54,7 +54,7 @@ end
 
 def get_sub_questions
   lower = 1
-  upper = 7
+  upper = 10
   questions = []
   (lower..upper).each do |a|
     (a..upper).each do |b|
@@ -73,7 +73,7 @@ end
 
 def run
   questions = get_questions.shuffle.first(15) +
-              get_sub_questions.shuffle.first(20)
+              get_sub_questions.shuffle.first(35)
 
   questions.shuffle!
 
