@@ -43,27 +43,21 @@ def get_questions
       questions << q
     end
   end
-  # ((upper-1)..upper).each do |a|
-  #   (lower..a).each do |b|
-  #     q = format_question(a, b)
-  #     questions << q
-  #   end
-  # end
   return questions
 end
 
 def get_sub_questions
   lower = 1
-  upper = 10
+  upper = 12
   questions = []
-  (lower..upper).each do |a|
-    (a..upper).each do |b|
+  (lower..upper-1).each do |a|
+    (a+1..upper).each do |b|
       q = format_question(b, a, :sub)
       questions << q
     end
   end
   ((upper-1)..upper).each do |a|
-    (lower..a).each do |b|
+    (lower..a-1).each do |b|
       q = format_question(a, b, :sub)
       questions << q
     end
