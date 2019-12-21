@@ -48,7 +48,7 @@ end
 
 def get_sub_questions
   lower = 1
-  upper = 12
+  upper = 13
   questions = []
   (lower..upper-1).each do |a|
     (a+1..upper).each do |b|
