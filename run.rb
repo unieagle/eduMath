@@ -3,8 +3,8 @@ def symbol(value)
   value ? "✅" : "❌"
 end
 
-def show_question(question)
-  puts "#{question} = ?"
+def show_question(question, question_number = nil)
+  puts "第#{question_number}题. #{question} = ?"
   ans = ''
   while ans.length == 0
     ans = gets.chomp
@@ -48,16 +48,11 @@ end
 
 def get_sub_questions
   lower = 1
-  upper = 13
+  upper = 18
   questions = []
-  (lower..upper-1).each do |a|
-    (a+1..upper).each do |b|
-      q = format_question(b, a, :sub)
-      questions << q
-    end
-  end
-  ((upper-1)..upper).each do |a|
-    (lower..a-1).each do |b|
+  (lower..upper).each do |a|
+    (lower..[a, 9].min).each do |b|
+      next if a - b <= 0 || a - b > 9
       q = format_question(a, b, :sub)
       questions << q
     end
@@ -65,15 +60,24 @@ def get_sub_questions
   return questions
 end
 
+def questions
+  questions = get_questions +
+              get_sub_questions
+  questions.each do |q|
+    puts q
+  end
+  puts questions.size
+end
+
 def run
   questions = get_questions.shuffle.first(15) +
-              get_sub_questions.shuffle.first(35)
+              get_sub_questions.shuffle.first(25)
 
   questions.shuffle!
 
   results = []
-  questions.each do |q|
-    results << [q, show_question(q)]
+  questions.each_with_index do |q, idx|
+    results << [q, show_question(q, idx + 1)]
   end
 
   results.each do |question|
@@ -98,4 +102,5 @@ def run
   end
 end
 
+# questions
 run
