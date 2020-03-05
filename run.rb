@@ -60,11 +60,12 @@ def get_sub_questions
   return questions
 end
 
-def questions
+def questions(shuffle = false)
   questions = get_questions +
               get_sub_questions
+  questions = questions.shuffle if shuffle
   questions.each do |q|
-    puts q
+    puts "#{q} ="
   end
   puts questions.size
 end
@@ -102,5 +103,5 @@ def run
   end
 end
 
-# questions
-run
+questions(true)
+# run
