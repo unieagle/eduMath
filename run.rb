@@ -123,3 +123,5 @@ end
 # questions
 # run
 print_questions(get_mixed_questions)
+# questions(true)
+# run
