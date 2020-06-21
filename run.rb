@@ -60,11 +60,29 @@ def get_sub_questions
   return questions
 end
 
+def get_mixed_questions
+  left_range = (10..99)
+  right_range = (10..99)
+
+  questions = []
+  100.times do |i|
+    left = Random.rand(left_range)
+    right = Random.rand(right_range)
+    q = format_question(left, right)
+    questions << q
+  end
+  questions
+end
+
 def questions
   questions = get_questions +
               get_sub_questions
+  print_questions(questions)
+end
+
+def print_questions(questions)
   questions.each do |q|
-    puts q
+    puts "#{q} ="
   end
   puts questions.size
 end
@@ -103,4 +121,5 @@ def run
 end
 
 # questions
-run
+# run
+print_questions(get_mixed_questions)
