@@ -65,10 +65,14 @@ def get_mixed_questions
   right_range = (10..99)
 
   questions = []
-  100.times do |i|
+  96.times do |i|
     left = Random.rand(left_range)
     right = Random.rand(right_range)
-    q = format_question(left, right)
+    if Random.rand <= 0.2 # percentage of subs
+      q = format_question(left + right, right, :sub)
+    else
+      q = format_question(left, right)
+    end
     questions << q
   end
   questions
