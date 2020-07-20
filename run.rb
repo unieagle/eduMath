@@ -9,7 +9,7 @@ def show_question(question, question_number = nil)
   while ans.length == 0
     ans = gets.chomp
   end
-  correct = eval(question) == ans.to_f
+  correct = eval(question.gsub('x', '*')) == ans.to_f
   puts symbol(correct)
   unless correct
     puts "正确答案是: #{question} = #{eval(question)}"
@@ -30,6 +30,12 @@ def format_question(a, b, op = :add)
     end
   when :sub
     "#{a} - #{b}"
+  when :multiply
+    if Random.rand >= 0.5
+      "#{a} x #{b}"
+    else
+      "#{b} x #{a}"
+    end
   end
 end
 
@@ -60,6 +66,14 @@ def get_sub_questions
   return questions
 end
 
+def get_multiply_question(left = nil, right = nil)
+  left_range = (1..9)
+  right_range = (1..9)
+  left ||= Random.rand(left_range)
+  right ||= Random.rand(right_range)
+  format_question(left, right, :multiply)
+end
+
 def get_mixed_questions
   left_range = (10..99)
   right_range = (10..99)
@@ -68,8 +82,11 @@ def get_mixed_questions
   96.times do |i|
     left = Random.rand(left_range)
     right = Random.rand(right_range)
-    if Random.rand <= 0.2 # percentage of subs
+    random = Random.rand
+    if random <= 0.4 # percentage of subs
       q = format_question(left + right, right, :sub)
+    elsif random <= 0.8
+      q = get_multiply_question
     else
       q = format_question(left, right)
     end
