@@ -29,13 +29,19 @@ def format_question(a, b, op = :add)
       "#{b} + #{a}"
     end
   when :sub
-    "#{a} - #{b}"
+    if Random.rand >= 0.5
+      "#{a} - #{b}"
+    else
+      "#{b} - #{a}"
+    end
   when :multiply
     if Random.rand >= 0.5
       "#{a} x #{b}"
     else
       "#{b} x #{a}"
     end
+  when :divide
+    "#{a} ÷ #{b}"
   end
 end
 
@@ -67,11 +73,35 @@ def get_sub_questions
 end
 
 def get_multiply_question(left = nil, right = nil)
-  left_range = (1..9)
-  right_range = (1..9)
-  left ||= Random.rand(left_range)
-  right ||= Random.rand(right_range)
-  format_question(left, right, :multiply)
+  if @all_multiply_questions.nil? || @all_multiply_questions.count == 0
+    @all_multiply_questions ||= []
+    (2..9).each do |left|
+      (left..9).each do |right|
+        @all_multiply_questions << {left: left, right: right}
+      end
+    end
+    @all_multiply_questions.shuffle!
+  end
+
+  q = @all_multiply_questions.shift
+
+  format_question(q[:left], q[:right], :multiply)
+end
+
+def get_divide_question(left = nil, right = nil)
+  if @all_divide_questions.nil? || @all_divide_questions.count == 0
+    @all_divide_questions ||= []
+    (2..9).each do |left|
+      (left..9).each do |right|
+        @all_divide_questions << {left: left, right: right}
+      end
+    end
+    @all_divide_questions.shuffle!
+  end
+
+  q = @all_multiply_questions.shift
+
+  format_question(q[:left] * q[:right], Random.rand >= 0.5 ? q[:left] : q[:right], :divide)
 end
 
 def get_mixed_questions
@@ -83,10 +113,12 @@ def get_mixed_questions
     left = Random.rand(left_range)
     right = Random.rand(right_range)
     random = Random.rand
-    if random <= 0.4 # percentage of subs
+    if random <= 0.2 # percentage of subs
       q = format_question(left + right, right, :sub)
-    elsif random <= 0.8
+    elsif random <= 0.7
       q = get_multiply_question
+    elsif random <= 0.9
+      q = get_divide_question
     else
       q = format_question(left, right)
     end
